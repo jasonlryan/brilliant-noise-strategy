@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { DM_Sans } from "next/font/google"
 import "./globals.css"
+import { MainNavigation, BreadcrumbNavigation } from "@/components/navigation"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -11,9 +12,9 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Brilliant Noise Strategy House",
-  description: "Interactive SaaS Transformation Strategy Visualization",
-  generator: "v0.app",
+  title: "BN Trust OS - AI Risk & Trust Radar",
+  description: "AI governance platform for communications - Foundation layer, methodology, and operational readiness",
+  generator: "BN Trust OS v2025.01",
 }
 
 export default function RootLayout({
@@ -23,7 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={dmSans.variable}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <div className="min-h-screen bg-background">
+          <MainNavigation />
+          <main className="container mx-auto px-4 py-8">
+            <BreadcrumbNavigation />
+            {children}
+          </main>
+        </div>
+      </body>
     </html>
   )
 }

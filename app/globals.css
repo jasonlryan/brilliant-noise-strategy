@@ -14,8 +14,8 @@
   --primary-foreground: oklch(1 0 0); /* #ffffff - Text color for primary buttons */
   --secondary: oklch(0.646 0.222 280.116); /* #8b5cf6 - Secondary color for accents */
   --secondary-foreground: oklch(1 0 0); /* #ffffff - Text color for secondary buttons */
-  --muted: oklch(0.556 0 0); /* #6b7280 - Muted text color */
-  --muted-foreground: oklch(0.97 0 0); /* #f1f5f9 - Background for muted text */
+  --muted: oklch(0.97 0 0); /* #f1f5f9 - Background for muted elements */
+  --muted-foreground: oklch(0.556 0 0); /* #6b7280 - Muted text color */
   --accent: oklch(0.646 0.222 280.116); /* #8b5cf6 - Accent color for highlights */
   --accent-foreground: oklch(1 0 0); /* #ffffff - Text color for accents */
   --destructive: oklch(0.577 0.245 27.325);

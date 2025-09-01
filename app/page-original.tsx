@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
 import { 
   Shield, 
   Activity, 
@@ -12,112 +13,110 @@ import {
   BarChart3, 
   FileText,
   CheckCircle,
+  AlertTriangle,
   TrendingUp,
+  Users,
+  Clock,
   Award,
   DollarSign,
+  Target,
   ArrowRight,
-  AlertTriangle,
-  Users,
+  Zap
 } from "lucide-react"
 
-// Dashboard business metrics
+// Dashboard overview data
 const dashboardMetrics = {
-  eu_ai_act_compliance: 75,
-  active_risks: 3,
-  high_priority_risks: 1,
-  team_readiness: 88,
-  avg_response_time: 4.2,
+  foundation_status: "amber" as const,
+  active_initiatives: 12,
+  blocked_initiatives: 1,
+  play_cards_active: 4,
+  l1_completion: 88,
+  avg_ttfa: 4.2,
   roi_percentage: 240,
   industry_percentile: 78,
-  monthly_savings: 1240,
-  compliance_deadline_days: 45
+  monthly_savings: 1240
 }
 
 const quickStats = [
   {
-    title: "EU AI Act Compliance",
-    value: `${dashboardMetrics.eu_ai_act_compliance}%`,
-    subtitle: `${dashboardMetrics.compliance_deadline_days} days until deadline`,
+    title: "Foundation Status",
+    value: "AMBER",
+    subtitle: "2 criteria pending",
     icon: Shield,
     color: "text-amber-600",
-    href: "/eu-ai-act"
+    href: "/foundation"
   },
   {
-    title: "Risk Exposure", 
-    value: dashboardMetrics.active_risks,
-    subtitle: `${dashboardMetrics.high_priority_risks} high priority`,
-    icon: AlertTriangle,
-    color: "text-red-600",
-    href: "/risk-exposure"
+    title: "Active Initiatives", 
+    value: dashboardMetrics.active_initiatives,
+    subtitle: `${dashboardMetrics.blocked_initiatives} blocked`,
+    icon: Activity,
+    color: "text-blue-600",
+    href: "/initiatives"
   },
   {
-    title: "Team Readiness",
-    value: `${dashboardMetrics.team_readiness}%`,
-    subtitle: "AI governance prepared",
+    title: "L1 Literacy",
+    value: `${dashboardMetrics.l1_completion}%`,
+    subtitle: "Team completion",
     icon: BookOpen,
     color: "text-green-600", 
-    href: "/transformation"
+    href: "/play-cards"
   },
   {
-    title: "Business Impact",
+    title: "ROI Achievement",
     value: `${dashboardMetrics.roi_percentage}%`,
-    subtitle: "ROI delivered",
+    subtitle: "vs 200% target",
     icon: DollarSign,
     color: "text-purple-600",
-    href: "/business-impact"
+    href: "/analytics"
   }
 ]
 
 const platformSections = [
   {
-    title: "Risk Exposure Center",
-    description: "Real-time AI risk monitoring and reputation management",
-    icon: AlertTriangle,
-    href: "/risk-exposure",
-    status: "3 active risks, 1 high priority",
-    color: "border-red-200",
-    stage: "AUTOMATE",
-    features: ["Crisis signal detection", "Reputation scoring", "Risk assessment", "Alert management"]
-  },
-  {
-    title: "EU AI Act Compliance",
-    description: "Regulatory readiness and compliance tracking",
+    title: "Foundation Status",
+    description: "Gate A operational readiness and security controls",
     icon: Shield,
-    href: "/eu-ai-act", 
-    status: "75% ready - 45 days remaining",
+    href: "/foundation",
+    status: "AMBER - 2 pending",
     color: "border-amber-200",
-    stage: "AUTOMATE",
-    features: ["Compliance checklist", "Documentation templates", "Deadline tracking", "Board reporting"]
+    features: ["Gate A criteria tracking", "Security metrics", "Compliance evidence", "Operational readiness"]
   },
   {
-    title: "Transformation Journey",
-    description: "Guide your organization through Automate → Augment → Transform",
-    icon: TrendingUp,
-    href: "/transformation",
-    status: "Currently in AUTOMATE stage",
+    title: "Initiative Management",
+    description: "Track AI governance initiatives through approval workflows",
+    icon: Activity,
+    href: "/initiatives", 
+    status: "12 active, 1 blocked",
     color: "border-blue-200",
-    stage: "AUGMENT",
-    features: ["Stage assessment", "Progress tracking", "Next step guidance", "Success metrics"]
+    features: ["Approval pipelines", "TTFA tracking", "Exception handling", "Foundation integration"]
   },
   {
-    title: "Business Impact Dashboard",
-    description: "ROI tracking, efficiency gains, and performance metrics",
-    icon: BarChart3,
-    href: "/business-impact",
-    status: "240% ROI achieved",
+    title: "Play Card Center",
+    description: "AI governance methodology and literacy progression",
+    icon: BookOpen,
+    href: "/play-cards",
+    status: "4/5 L1 active",
     color: "border-green-200",
-    stage: "TRANSFORM",
-    features: ["ROI calculation", "Efficiency tracking", "Industry benchmarks", "Executive reporting"]
+    features: ["Heat map visualization", "Literacy ladder", "Implementation guides", "Usage analytics"]
   },
   {
-    title: "Customer Success Portal",
-    description: "Value realization tracking and success management",
-    icon: Users,
-    href: "/customer-success",
-    status: "Next QBR: March 15",
+    title: "Analytics & KPIs",
+    description: "Performance metrics and industry benchmarking",
+    icon: BarChart3,
+    href: "/analytics",
+    status: "78th percentile",
     color: "border-purple-200",
-    stage: "TRANSFORM",
-    features: ["Value realization", "QBR scheduling", "Success metrics", "Onboarding progress"]
+    features: ["Executive dashboards", "Benchmark comparison", "Trend analysis", "ROI tracking"]
+  },
+  {
+    title: "QBR Reports",
+    description: "Quarterly business reviews and executive reporting",
+    icon: FileText,
+    href: "/qbr",
+    status: "Q1 2025 ready",
+    color: "border-orange-200",
+    features: ["Executive summaries", "Value realization", "Benchmark positioning", "Recommendations"]
   }
 ]
 
@@ -128,19 +127,20 @@ export default function TrustOSDashboard() {
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
           <Shield className="h-8 w-8 text-blue-600" />
-          <h1 className="text-4xl font-bold text-foreground">AI Risk & Trust Radar</h1>
+          <h1 className="text-4xl font-bold text-foreground">BN Trust OS Radar</h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          The only AI governance platform built for communications leaders. Never get caught off-guard by AI risks again.
+          AI governance platform for communications - Foundation layer, methodology implementation, 
+          and acquisition-ready operational maturity
         </p>
         <div className="flex items-center justify-center gap-4">
-          <Badge variant="outline" className="gap-2 border-red-200 text-red-700">
-            <AlertTriangle className="h-3 w-3" />
-            EU AI Act: Feb 2025
+          <Badge variant="outline" className="gap-2">
+            <Zap className="h-3 w-3" />
+            v2025.01 - Trust OS v2
           </Badge>
-          <Badge variant="outline" className="gap-2 border-green-200 text-green-700">
+          <Badge variant="outline" className="gap-2">
             <Award className="h-3 w-3" />
-            240% ROI Delivered
+            78th Industry Percentile
           </Badge>
         </div>
       </div>
@@ -269,9 +269,6 @@ export default function TrustOSDashboard() {
                       <div className="flex items-center gap-3">
                         <Icon className="h-6 w-6 text-foreground" />
                         <CardTitle className="text-xl">{section.title}</CardTitle>
-                        <Badge variant="secondary" className="text-xs font-medium">
-                          {section.stage}
-                        </Badge>
                         <Badge variant="outline" className="text-xs">
                           {section.status}
                         </Badge>
