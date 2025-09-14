@@ -1,469 +1,357 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { 
   TrendingUp,
   CheckCircle,
-  Clock,
-  ArrowRight,
   Target,
-  Zap,
   Brain,
-  Rocket,
-  Star,
-  Users,
-  BarChart3,
-  Shield,
-  Award,
-  Activity,
   BookOpen,
-  Settings
+  Award,
+  Play,
+  ArrowRight,
+  Settings,
+  Calendar
 } from "lucide-react"
 
-// Transformation journey data
-const transformationData = {
-  current_stage: "automate",
-  overall_progress: 35,
-  automate_completion: 75,
-  augment_completion: 25,
-  transform_completion: 5,
-  estimated_completion: "Q3 2025",
-  roi_current: 240,
-  roi_target: 400,
-  time_saved_monthly: 1240
-}
+// Literacy Ladder data from methodology docs
+const literacyLevels = [
+  {
+    level: "L0",
+    name: "AI Unaware", 
+    description: "Limited or no experience with AI-assisted communications tools",
+    prevalence: "35-40% of communications professionals (industry benchmark)",
+    duration: "Starting point for ladder progression",
+    color: "border-gray-400",
+    characteristics: [
+      "Unaware of AI governance risks and opportunities",
+      "No structured approach to AI tool evaluation",
+      "Reactive rather than proactive risk management",
+      "Limited understanding of regulatory implications"
+    ],
+    nextStep: "Begin 12-week L1 sprint"
+  },
+  {
+    level: "L1", 
+    name: "AI Competent",
+    description: "Basic competency in AI governance fundamentals with structured tool usage",
+    prevalence: "85% success rate from participants",
+    duration: "12-week sprint (20-25 hours total)",
+    color: "border-green-500",
+    characteristics: [
+      "Responsible prompting and bias recognition",
+      "PII & IP protection basics", 
+      "Governance 101 processes",
+      "Audit trail and evidence collection"
+    ],
+    nextStep: "Advance to L2 advanced level"
+  },
+  {
+    level: "L2",
+    name: "AI Advanced", 
+    description: "Advanced practitioner capable of optimizing processes and training others",
+    prevalence: "65% success rate from L1 graduates",
+    duration: "6-month development period",
+    color: "border-blue-500", 
+    characteristics: [
+      "Process optimization and custom workflow design",
+      "Team leadership and mentoring capabilities",
+      "Tool integration and governance customization",
+      "Advanced Play Card implementation"
+    ],
+    nextStep: "Consider L3 tool-maker program"
+  },
+  {
+    level: "L3",
+    name: "AI Tool-Maker",
+    description: "Expert-level capability to create and customize AI governance tools", 
+    prevalence: "30% success rate from L2 graduates", 
+    duration: "12-month development period",
+    color: "border-purple-500",
+    characteristics: [
+      "Custom solution development and AI model training",
+      "Industry leadership and strategic advisory",
+      "Advanced automation and regulatory innovation", 
+      "Organizational transformation and mentoring"
+    ],
+    nextStep: "Industry leadership and innovation"
+  }
+]
 
-const transformationStages = [
+// 12-week sprint framework from docs
+const sprintFramework = [
   {
-    id: "automate",
-    name: "Automate",
-    icon: Zap,
-    description: "Streamline processes and eliminate repetitive tasks",
-    progress: transformationData.automate_completion,
-    status: "active",
-    timeframe: "0-6 months",
-    focus: "Efficiency & Productivity",
-    outcomes: [
-      "4.2 day average approval time (vs 6.8 industry)",
-      "1,240 hours saved monthly across teams", 
-      "240% ROI through automation",
-      "78% reduction in manual compliance checks"
-    ],
-    nextActions: [
-      "Complete EU AI Act compliance automation",
-      "Implement automated risk monitoring",
-      "Deploy crisis signal detection system"
+    weeks: "Weeks 1-2",
+    phase: "Foundation & Assessment", 
+    focus: "Baseline literacy assessment, tool audit, risk mapping",
+    activities: [
+      "Complete Personal AI Scorecard baseline",
+      "Audit current AI tool usage across team",
+      "Map existing governance processes and gaps",
+      "Set individual learning objectives"
     ]
   },
   {
-    id: "augment", 
-    name: "Augment",
-    icon: Brain,
-    description: "Enhance human expertise with AI-powered insights",
-    progress: transformationData.augment_completion,
-    status: "starting",
-    timeframe: "6-18 months", 
-    focus: "Intelligence & Insights",
-    outcomes: [
-      "Predictive risk modeling with 85% accuracy",
-      "Real-time reputation sentiment analysis",
-      "AI-powered strategic communications planning",
-      "Enhanced decision-making with data insights"
-    ],
-    nextActions: [
-      "Implement predictive analytics engine",
-      "Deploy advanced sentiment monitoring",
-      "Create AI strategy advisor tools"
+    weeks: "Weeks 3-6", 
+    phase: "Core Learning",
+    focus: "L1 competency development, supervised practice, tool selection",
+    activities: [
+      "Master responsible prompting techniques",
+      "Learn PII & IP protection protocols", 
+      "Practice governance workflow processes",
+      "Apply learning to real initiatives"
     ]
   },
   {
-    id: "transform",
-    name: "Transform", 
-    icon: Rocket,
-    description: "Unlock new capabilities and competitive advantages",
-    progress: transformationData.transform_completion,
-    status: "planned",
-    timeframe: "18+ months",
-    focus: "Innovation & Leadership",
-    outcomes: [
-      "Industry-leading AI governance model",
-      "Autonomous crisis response capabilities", 
-      "AI-native strategic planning processes",
-      "Market leadership in responsible AI adoption"
-    ],
-    nextActions: [
-      "Design autonomous response systems",
-      "Develop AI-native strategic frameworks",
-      "Establish thought leadership platform"
+    weeks: "Weeks 7-10",
+    phase: "Applied Practice",
+    focus: "Live project implementation, governance application, peer collaboration",
+    activities: [
+      "Lead supervised governance initiatives",
+      "Implement learned processes on live projects",
+      "Collaborate with peers on complex cases",
+      "Document lessons learned and improvements"
+    ]
+  },
+  {
+    weeks: "Weeks 11-12",
+    phase: "Validation & Planning", 
+    focus: "Competency validation, scorecard completion, next level planning",
+    activities: [
+      "Complete final Personal AI Scorecard assessment",
+      "Demonstrate competency to team lead/manager",
+      "Plan progression to next literacy level",
+      "Share learnings with organization"
     ]
   }
 ]
 
-const stageMetrics = {
-  automate: {
-    efficiency_gain: "240%",
-    time_saved: "1,240h/month",
-    error_reduction: "78%",
-    compliance_score: "92%"
-  },
-  augment: {
-    prediction_accuracy: "85%",
-    insight_depth: "3x deeper",
-    decision_speed: "60% faster",
-    strategic_impact: "High"
-  },
-  transform: {
-    market_position: "Industry leader",
-    innovation_rate: "5x faster",
-    competitive_advantage: "Significant",
-    future_readiness: "95%"
-  }
-}
 
-const upcomingMilestones = [
+// L1 Assessment requirements from docs
+const l1Requirements = [
   {
-    title: "Complete Risk Automation",
-    stage: "automate",
-    dueDate: "Feb 15, 2025",
-    progress: 85,
-    priority: "high",
-    description: "Finish automated risk detection and response systems"
+    area: "Responsible Prompting",
+    description: "Prompt engineering basics and bias recognition",
+    skills: ["Understand prompt engineering basics", "Recognize bias potential", "Implement fact-checking protocols", "Apply brand voice consistency"]
   },
   {
-    title: "Deploy Predictive Analytics",
-    stage: "augment", 
-    dueDate: "Apr 30, 2025",
-    progress: 20,
-    priority: "medium",
-    description: "Launch predictive risk modeling capabilities"
+    area: "PII & IP Basics",
+    description: "Personal data and intellectual property protection", 
+    skills: ["Identify PII in content", "Understand IP risks", "Implement data masking", "Apply confidentiality principles"]
   },
   {
-    title: "Strategic AI Integration",
-    stage: "augment",
-    dueDate: "Jun 15, 2025", 
-    progress: 5,
-    priority: "medium",
-    description: "Integrate AI insights into strategic planning"
-  },
-  {
-    title: "Autonomous Response Beta",
-    stage: "transform",
-    dueDate: "Q4 2025",
-    progress: 0,
-    priority: "low",
-    description: "Begin testing autonomous crisis response"
+    area: "Governance 101", 
+    description: "Basic approval workflows and documentation",
+    skills: ["Understand approval workflows", "Recognize escalation triggers", "Implement audit trails", "Apply exception reporting"]
   }
 ]
 
-const getStageColor = (stage: string, status: string) => {
-  if (status === "active") return "border-blue-500 bg-blue-50"
-  if (status === "starting") return "border-amber-500 bg-amber-50"
-  if (status === "planned") return "border-gray-300 bg-gray-50"
-  return "border-gray-200"
-}
-
-const getStageIcon = (stage: string, status: string) => {
-  if (status === "active") return "text-blue-600"
-  if (status === "starting") return "text-amber-600" 
-  if (status === "planned") return "text-gray-500"
-  return "text-gray-400"
-}
-
-export default function TransformationJourneyPage() {
+export default function TransformationPage() {
   return (
     <div className="space-y-8">
       {/* Page Header */}
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
           <TrendingUp className="h-8 w-8 text-blue-600" />
-          <h1 className="text-4xl font-bold text-foreground">Transformation Journey</h1>
+          <h1 className="text-4xl font-bold text-foreground">AI Literacy Transformation</h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Guide your organization through the systematic progression: Automate → Augment → Transform
+          Guide your team through L0 → L1 → L2 → L3 literacy progression with structured 12-week sprints
         </p>
         <div className="flex items-center justify-center gap-4">
           <Badge variant="outline" className="gap-2 border-blue-200 text-blue-700">
-            <Activity className="h-3 w-3" />
-            Currently in AUTOMATE stage
-          </Badge>
-          <Badge variant="outline" className="gap-2 border-green-200 text-green-700">
-            <Target className="h-3 w-3" />
-            {transformationData.overall_progress}% Complete
-          </Badge>
-          <Badge variant="outline" className="gap-2 border-purple-200 text-purple-700">
-            <Star className="h-3 w-3" />
-            Est. completion: {transformationData.estimated_completion}
+            <Calendar className="h-3 w-3" />
+            12-Week Sprint Framework
           </Badge>
         </div>
       </div>
 
-      {/* Journey Progress Overview */}
+      {/* Core Principle */}
       <Card className="border-l-4 border-l-blue-500">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5" />
-            Transformation Progress Overview
+            <Brain className="h-5 w-5" />
+            Methodology Principle
           </CardTitle>
-          <CardDescription>
-            Your organization's journey through the three stages of AI transformation
-          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center space-y-2">
-                <div className="text-2xl font-bold text-blue-600">{transformationData.automate_completion}%</div>
-                <p className="text-sm font-medium">AUTOMATE Stage</p>
-                <Progress value={transformationData.automate_completion} className="h-2" />
-              </div>
-              <div className="text-center space-y-2">
-                <div className="text-2xl font-bold text-amber-600">{transformationData.augment_completion}%</div>
-                <p className="text-sm font-medium">AUGMENT Stage</p>
-                <Progress value={transformationData.augment_completion} className="h-2" />
-              </div>
-              <div className="text-center space-y-2">
-                <div className="text-2xl font-bold text-gray-500">{transformationData.transform_completion}%</div>
-                <p className="text-sm font-medium">TRANSFORM Stage</p>
-                <Progress value={transformationData.transform_completion} className="h-2" />
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">{transformationData.overall_progress}%</div>
-              <p className="text-sm text-muted-foreground">Overall Transformation Progress</p>
-              <Progress value={transformationData.overall_progress} className="h-3 mt-2" />
-            </div>
+          <div className="text-center space-y-2">
+            <p className="text-lg font-medium">
+              Literacy unlocks capability → Capability enables governance → Governance delivers value
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Progressive competency development through measurable learning objectives and practical application
+            </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Transformation Stages */}
-      <div className="space-y-6">
-        <h2 className="text-2xl font-semibold">Transformation Stages</h2>
-        <div className="space-y-6">
-          {transformationStages.map((stage, index) => {
-            const Icon = stage.icon
-            return (
-              <Card key={stage.id} className={`${getStageColor(stage.id, stage.status)} hover:shadow-md transition-shadow`}>
+
+      {/* Literacy Levels Detail */}
+      <Tabs defaultValue="ladder" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="ladder">Literacy Ladder</TabsTrigger>
+          <TabsTrigger value="sprint">12-Week Sprint</TabsTrigger>
+          <TabsTrigger value="assessment">L1 Assessment</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="ladder" className="space-y-4">
+          <div className="space-y-6">
+            {literacyLevels.map((level, index) => (
+              <Card key={index} className={`${level.color} border-l-4`}>
                 <CardHeader>
                   <div className="flex items-start justify-between">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-3">
-                          <Icon className={`h-8 w-8 ${getStageIcon(stage.id, stage.status)}`} />
-                          <div>
-                            <CardTitle className="text-2xl">{stage.name}</CardTitle>
-                            <CardDescription className="text-base mt-1">
-                              {stage.description}
-                            </CardDescription>
-                          </div>
-                        </div>
-                        <div className="text-right space-y-1">
-                          <Badge 
-                            variant={stage.status === "active" ? "default" : stage.status === "starting" ? "secondary" : "outline"}
-                            className="text-xs"
-                          >
-                            {stage.status.toUpperCase()}
-                          </Badge>
-                          <div className="text-sm text-muted-foreground">{stage.timeframe}</div>
-                        </div>
-                      </div>
-                      
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                          <h4 className="font-semibold mb-2 text-green-700">Business Outcomes Achieved:</h4>
-                          <ul className="space-y-1 text-sm">
-                            {stage.outcomes.map((outcome, idx) => (
-                              <li key={idx} className="flex items-start gap-2">
-                                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                                <span>{outcome}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-2 text-blue-700">Next Actions:</h4>
-                          <ul className="space-y-1 text-sm">
-                            {stage.nextActions.map((action, idx) => (
-                              <li key={idx} className="flex items-start gap-2">
-                                <ArrowRight className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                                <span>{action}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <span className="text-sm font-medium">Progress:</span>
-                          <div className="flex items-center gap-2">
-                            <Progress value={stage.progress} className="w-32 h-2" />
-                            <span className="text-sm font-bold">{stage.progress}%</span>
-                          </div>
-                        </div>
-                        <div className="text-sm font-medium text-muted-foreground">
-                          Focus: {stage.focus}
-                        </div>
+                    <div className="space-y-2">
+                      <CardTitle className="text-xl">{level.level}: {level.name}</CardTitle>
+                      <CardDescription className="text-base">
+                        {level.description}
+                      </CardDescription>
+                      <div className="flex items-center gap-4 text-sm">
+                        <Badge variant="outline">{level.prevalence}</Badge>
+                        <span className="text-muted-foreground">Duration: {level.duration}</span>
                       </div>
                     </div>
+                    <Button variant="outline" size="sm">
+                      {level.nextStep}
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
                   </div>
                 </CardHeader>
-              </Card>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Stage Metrics */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Key Performance Indicators by Stage</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-blue-600" />
-                AUTOMATE Metrics
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm">Efficiency Gain:</span>
-                <span className="font-bold text-blue-600">{stageMetrics.automate.efficiency_gain}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Time Saved:</span>
-                <span className="font-bold text-blue-600">{stageMetrics.automate.time_saved}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Error Reduction:</span>
-                <span className="font-bold text-blue-600">{stageMetrics.automate.error_reduction}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Compliance Score:</span>
-                <span className="font-bold text-blue-600">{stageMetrics.automate.compliance_score}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Brain className="h-5 w-5 text-amber-600" />
-                AUGMENT Metrics
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm">Prediction Accuracy:</span>
-                <span className="font-bold text-amber-600">{stageMetrics.augment.prediction_accuracy}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Insight Depth:</span>
-                <span className="font-bold text-amber-600">{stageMetrics.augment.insight_depth}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Decision Speed:</span>
-                <span className="font-bold text-amber-600">{stageMetrics.augment.decision_speed}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Strategic Impact:</span>
-                <span className="font-bold text-amber-600">{stageMetrics.augment.strategic_impact}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Rocket className="h-5 w-5 text-purple-600" />
-                TRANSFORM Metrics
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm">Market Position:</span>
-                <span className="font-bold text-purple-600">{stageMetrics.transform.market_position}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Innovation Rate:</span>
-                <span className="font-bold text-purple-600">{stageMetrics.transform.innovation_rate}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Competitive Edge:</span>
-                <span className="font-bold text-purple-600">{stageMetrics.transform.competitive_advantage}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Future Readiness:</span>
-                <span className="font-bold text-purple-600">{stageMetrics.transform.future_readiness}</span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Upcoming Milestones */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Upcoming Milestones</h2>
-        <div className="space-y-4">
-          {upcomingMilestones.map((milestone, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-blue-600" />
-                      <CardTitle className="text-lg">{milestone.title}</CardTitle>
-                      <Badge 
-                        variant={milestone.priority === "high" ? "destructive" : milestone.priority === "medium" ? "secondary" : "outline"}
-                        className="text-xs"
-                      >
-                        {milestone.priority.toUpperCase()}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {milestone.stage.toUpperCase()}
-                      </Badge>
-                    </div>
-                    <CardDescription className="text-base">
-                      {milestone.description}
-                    </CardDescription>
-                    <div className="flex items-center gap-4">
-                      <span className="text-sm text-muted-foreground">Due: {milestone.dueDate}</span>
-                      <div className="flex items-center gap-2">
-                        <Progress value={milestone.progress} className="w-24 h-2" />
-                        <span className="text-sm font-medium">{milestone.progress}%</span>
-                      </div>
-                    </div>
+                <CardContent>
+                  <div>
+                    <h5 className="font-medium mb-2">Key Characteristics:</h5>
+                    <ul className="space-y-1 text-sm">
+                      {level.characteristics.map((characteristic, charIndex) => (
+                        <li key={charIndex} className="flex items-center gap-2">
+                          <CheckCircle className="h-3 w-3 text-green-500" />
+                          {characteristic}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="sprint" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                12-Week Sprint Structure
+              </CardTitle>
+              <CardDescription>
+                Structured progression framework with 2-3 hours/week commitment
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">12</div>
+                    <p className="text-sm font-medium">Weeks Duration</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-600">2-3</div>
+                    <p className="text-sm font-medium">Hours per Week</p>
+                  </div>
                 </div>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </div>
+                
+                <div className="space-y-4">
+                  {sprintFramework.map((phase, index) => (
+                    <Card key={index} className="border-l-4 border-l-blue-500">
+                      <CardHeader>
+                        <CardTitle className="text-lg">{phase.weeks}: {phase.phase}</CardTitle>
+                        <CardDescription>{phase.focus}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-1 text-sm">
+                          {phase.activities.map((activity, actIndex) => (
+                            <li key={actIndex} className="flex items-center gap-2">
+                              <Target className="h-3 w-3 text-blue-500" />
+                              {activity}
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="assessment" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Award className="h-5 w-5" />
+                L1 Personal AI Scorecard Requirements
+              </CardTitle>
+              <CardDescription>
+                Minimum 70% score across all competency areas for L1 certification
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {l1Requirements.map((requirement, index) => (
+                  <Card key={index}>
+                    <CardHeader>
+                      <CardTitle className="text-lg">{requirement.area}</CardTitle>
+                      <CardDescription>{requirement.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-1 text-sm">
+                        {requirement.skills.map((skill, skillIndex) => (
+                          <li key={skillIndex} className="flex items-center gap-2">
+                            <CheckCircle className="h-3 w-3 text-green-500" />
+                            {skill}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                ))}
+                
+                <div className="mt-6 p-4 border border-amber-500 rounded-lg bg-amber-50">
+                  <h5 className="font-semibold text-amber-700 mb-2">L1 Certification Requirements</h5>
+                  <ul className="space-y-1 text-sm text-amber-700">
+                    <li>• Minimum 70% score across all competency areas</li>
+                    <li>• Practical demonstration of governance processes</li>
+                    <li>• Successful completion of 3 supervised initiatives</li>
+                    <li>• Peer validation from team lead or manager</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
 
       {/* Quick Actions */}
       <div className="grid md:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5" />
-              Customize Journey
+              <BookOpen className="h-5 w-5" />
+              Take Literacy Assessment
             </CardTitle>
             <CardDescription>
-              Tailor transformation stages to your organization
+              Complete Personal AI Scorecard to determine current level
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button className="w-full">
-              Customize Plan
+              Start Assessment
             </Button>
           </CardContent>
         </Card>
@@ -471,16 +359,16 @@ export default function TransformationJourneyPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Expert Guidance
+              <Play className="h-5 w-5" />
+              View Play Cards
             </CardTitle>
             <CardDescription>
-              Get strategic advice for your transformation
+              Access methodology and implementation cards
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button variant="outline" className="w-full">
-              Book Session
+              Open Play Cards
             </Button>
           </CardContent>
         </Card>
@@ -488,16 +376,16 @@ export default function TransformationJourneyPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Award className="h-5 w-5" />
-              Progress Report
+              <Settings className="h-5 w-5" />
+              Sprint Management
             </CardTitle>
             <CardDescription>
-              Generate transformation progress summary
+              Manage sprint cohorts and progression tracking
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button variant="outline" className="w-full">
-              Generate Report
+              Manage Sprints
             </Button>
           </CardContent>
         </Card>
