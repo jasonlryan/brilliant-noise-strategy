@@ -1,0 +1,1016 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Literacy-First Intelligence Platform — Visualization</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #111820;
+      --muted: #7a8a9a;
+      --text: #e7eef6;
+      --accent: #5b9cff;
+      --accent-2: #8bd6a7;
+      --accent-3: #ffc857;
+      --danger: #ff6b6b;
+      --grid: #1a2430;
+      --card: #0f141b;
+      --border: #1e2a37;
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0b0f14 0%, #0b0f14 40%, #0d131a 100%);
+      color: var(--text);
+      font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif;
+    }
+    .container { max-width: 1100px; margin: 28px auto 64px; padding: 0 16px; }
+    h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: 0.2px; }
+    .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+
+    .toolbar {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .tab {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .tab[aria-selected="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(91,156,255,0.15) inset; }
+    .spacer { flex: 1; }
+    .btn {
+      border: 1px solid var(--border); background: var(--panel); color: var(--text);
+      padding: 8px 12px; border-radius: 8px; cursor: pointer; user-select: none;
+    }
+    .btn:hover { border-color: var(--accent); }
+
+    .legend { display: flex; gap: 14px; color: var(--muted); font-size: 12px; margin: 8px 0 18px; flex-wrap: wrap; }
+    .legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+
+    .panel {
+      background: rgba(16,22,29,0.8);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .grid-weeks { position: relative; border: 1px dashed var(--grid); border-radius: 10px; padding: 10px; }
+    .week-axis { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; }
+    .week-axis .cell { height: 18px; background: rgba(26,36,48,0.5); border-radius: 3px; text-align: center; color: var(--muted); font-size: 10px; line-height: 18px; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .card h3 { margin: 0; font-size: 15px; }
+    .meta { color: var(--muted); font-size: 12px; }
+
+    .timeline { position: relative; height: 28px; background: #0c1218; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .bar { position: absolute; height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 8px; font-size: 12px; color: #081018; font-weight: 600; }
+    .bar.phase0 { background: linear-gradient(90deg, var(--accent), #7db3ff); }
+    .bar.phase1 { background: linear-gradient(90deg, var(--accent-2), #a4e5bf); }
+    .bar.phase2 { background: linear-gradient(90deg, #e5a3ff, #f1c5ff); }
+    .bar.phase3 { background: linear-gradient(90deg, #ffd166, var(--accent-3)); }
+    .bar.phase4 { background: linear-gradient(90deg, #ff9f86, #ffb7a5); }
+    .bar.phase5 { background: linear-gradient(90deg, #8ad0ff, #bfe6ff); }
+
+    details { border-top: 1px dashed var(--border); padding-top: 8px; }
+    details > summary { cursor: pointer; color: var(--muted); }
+    ul { margin: 6px 0 0 16px; padding: 0; }
+    li { margin: 4px 0; }
+
+    .notice { color: var(--muted); font-size: 12px; margin-top: 8px; }
+    .footer { color: var(--muted); font-size: 12px; text-align: center; margin-top: 22px; }
+
+    /* Wireframe styles */
+    .wf-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: 120px; gap: 10px; }
+    .wf-box { background: #0c1218; border: 1px dashed var(--border); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; }
+    .wf-title { font-weight: 700; font-size: 13px; }
+    .wf-desc { color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Literacy-First Intelligence Platform — Visualization</h1>
+    <div class="subtitle">Interactive view: Vision → Client Platform → Build Roadmap. Cross the GenAI Divide through visible literacy, trusted governance, orchestrated intelligence. Source: <code>0.0 JR/development-plan.md</code>, <code>prod_strat.md</code>, <code>platform-vision.md</code></div>
+
+    <div class="toolbar">
+      <button class="tab" id="tab-vision" aria-selected="true">Vision</button>
+      <button class="tab" id="tab-client">Client Platform</button>
+      <button class="tab" id="tab-wireframe">Platform V1 Wireframe</button>
+      <button class="tab" id="tab-phases">Build Roadmap</button>
+      <button class="tab" id="tab-release">Client Launch Plan</button>
+      <button class="tab" id="tab-plan">PoC Plan</button>
+      <div class="spacer"></div>
+      <a href="/dashboard" target="_blank" style="text-decoration:none;">
+        <button class="btn" style="background: var(--accent); color: #081018; font-weight: 600;">🚀 Open Live PoC</button>
+      </a>
+      <button class="btn" id="btn-toggle-axis">Toggle Week Grid</button>
+      <button class="btn" id="btn-copy-json">Copy Dataset JSON</button>
+    </div>
+
+    <div id="axis" class="panel grid-weeks" style="display:none">
+      <div class="week-axis" id="week-axis"></div>
+      <div class="notice">Weeks 0–24 (phase ranges). Release train uses day ranges 0–180.</div>
+    </div>
+
+    <div id="view-vision">
+      <div class="panel" id="vision-intro" style="margin-bottom:14px"></div>
+      <div class="cards" id="vision-cards"></div>
+    </div>
+
+    <div id="view-client" style="display:none">
+      <div class="panel" id="client-intro" style="margin-bottom:14px"></div>
+      <div class="cards" id="client-cards"></div>
+    </div>
+
+    <div id="view-wireframe" style="display:none">
+      <div class="panel">
+        <div class="meta" style="margin-bottom:8px">Company X — Conceptual layout for V1 (not functional)</div>
+        <div class="wf-grid" id="wf-grid"></div>
+      </div>
+      <div class="cards" id="wireframe-cards"></div>
+    </div>
+
+    <div id="view-phases" style="display:none">
+      <div class="panel" id="phases-intro" style="margin-bottom:14px"></div>
+      <div class="cards" id="phase-cards"></div>
+    </div>
+
+    <div id="view-release" style="display:none">
+      <div class="panel" id="release-intro" style="margin-bottom:14px"></div>
+      <div class="cards" id="release-cards"></div>
+    </div>
+
+    <div id="view-plan" style="display:none">
+      <div class="panel" id="plan-content" style="white-space:normal"></div>
+    </div>
+
+    <div class="footer">Last updated: 2025‑10‑15 • Owner: AI + Business Architect</div>
+  </div>
+
+  <script id="dataset" type="application/json">{
+    "phases": [
+      {
+        "name": "Phase 0 — Alignment & Architecture Runway",
+        "startWeek": 0, "endWeek": 2, "class": "phase0",
+        "objectives": [
+          "Problem framing, outcomes, constraints, principles",
+          "Canonical architecture views and review gates"
+        ],
+        "scope": [
+          "Outcome Tree & Strategy Kernel refresh",
+          "Capability map, domain model",
+          "DDRs: auth, data store, LLM, hosting/IaC",
+          "RACI & acceptance criteria"
+        ],
+        "artifacts": ["Strategy brief","Capability map","Target vs current","DDRs","Risk register"],
+        "owners": ["Architect","CTO","COO"],
+        "exit": [
+          "Principles, outcomes, gates approved",
+          "3–5 critical DDRs approved"
+        ]
+      },
+      {
+        "name": "Phase 1 — Data & Insight Foundation",
+        "startWeek": 2, "endWeek": 5, "class": "phase1",
+        "objectives": [
+          "Trustworthy data backbone powering executive dashboard",
+          "Governed catalog for P&L and pipeline"
+        ],
+        "scope": [
+          "Normalize CSVs & data contracts",
+          "Ingestion + validation + typed transform",
+          "Dashboard adapter (mock API/static JSON)",
+          "Metric glossary"
+        ],
+        "artifacts": ["Data contracts","Validation report","Metric glossary","Adapter","Samples"],
+        "owners": ["CTO","Architect","Frontend"],
+        "exit": [
+          "Dashboard KPIs within ≤5% variance",
+          "Quality checks green"
+        ]
+      },
+      {
+        "name": "Phase 2 — Workflow + Agent‑Assisted Ops",
+        "startWeek": 4, "endWeek": 8, "class": "phase2",
+        "objectives": [
+          "Operationalize two workflows with HITL",
+          "Security baselines for prompts & logs"
+        ],
+        "scope": [
+          "Proposal Development & Monthly Forecast Review",
+          "Agent responsibilities & guardrails",
+          "Approvals, audit trail, retention rules"
+        ],
+        "artifacts": ["Workflow specs","Agent policies","Prompts","Decision logs","Checklists"],
+        "owners": ["Architect","COO","CTO","Head of AI"],
+        "exit": [
+          "E2E execution with ≥30% cycle‑time reduction",
+          "Override path & privacy guardrails verified"
+        ]
+      },
+      {
+        "name": "Phase 3 — Multi‑Tenant SaaS Skeleton",
+        "startWeek": 6, "endWeek": 12, "class": "phase3",
+        "objectives": [
+          "Auth, tenancy, RBAC, projects for pilots",
+          "Observability & cost tracking MVP"
+        ],
+        "scope": [
+          "Email auth (SSO later)",
+          "Organizations/projects, roles",
+          "Data isolation & export/import",
+          "Stable API surface"
+        ],
+        "artifacts": ["API spec","Tenancy model","RBAC matrix","Runbooks","IaC"],
+        "owners": ["CTO","Platform Eng","Finance"],
+        "exit": [
+          "3–5 pilot tenants isolated",
+          "P0 SLOs met in test; rollback validated"
+        ]
+      },
+      {
+        "name": "Phase 4 — Productization & Enterprise Readiness",
+        "startWeek": 10, "endWeek": 18, "class": "phase4",
+        "objectives": [
+          "Security/compliance hardening",
+          "Performance & reliability improvements"
+        ],
+        "scope": [
+          "SSO, audit logs, retention, DLP",
+          "Performance pass, caching, backpressure",
+          "Expand to 4–6 workflows"
+        ],
+        "artifacts": ["Compliance checklist","Threat model","Performance report","Usage/cost dashboards"],
+        "owners": ["CTO","vCISO","Platform Eng"],
+        "exit": [
+          "Security review passed; audit trails complete",
+          "Costs within budget; NPS ≥ target"
+        ]
+      },
+      {
+        "name": "Phase 5 — Ecosystem & Extensibility",
+        "startWeek": 16, "endWeek": 24, "class": "phase5",
+        "objectives": [
+          "Open API & extension model",
+          "Partner integrations & sandbox"
+        ],
+        "scope": [
+          "Tokens/quotas, webhooks, plugin points",
+          "SDK & examples; docs site"
+        ],
+        "artifacts": ["Developer docs","Examples","Partner guide"],
+        "owners": ["CTO","Head of Partnerships"],
+        "exit": [
+          "≥2 third‑party integrations live",
+          "Dev onboarding < 1 hour; versioned docs"
+        ]
+      }
+    ],
+    "releaseTrain": [
+      {
+        "name": "Day 0–30 — Literacy + Governance Memory",
+        "startDay": 0, "endDay": 30, "class": "phase1",
+        "deliverables": [
+          "Tenant onboarding; roles",
+          "Attestation tracking; policy repo; evidence exports",
+          "Board Pack generator"
+        ],
+        "exit": [
+          "12 founding sprints delivered",
+          "TTFV ≤ 7 days"
+        ]
+      },
+      {
+        "name": "Day 31–90 — Governed Adoption (1 Workflow)",
+        "startDay": 31, "endDay": 90, "class": "phase2",
+        "deliverables": [
+          "Workflow module (Support or Document Ops)",
+          "Approvals, audit, PII redaction",
+          "KPI deltas in Board Pack"
+        ],
+        "exit": [
+          "≥70% pilots E2E; ≥30% cycle‑time reduction",
+          "Audit & override validated"
+        ]
+      },
+      {
+        "name": "Day 91–180 — Benchmarks & Expansion",
+        "startDay": 91, "endDay": 180, "class": "phase3",
+        "deliverables": [
+          "Comms benchmark & Incident Playbooks",
+          "Partner integrations (SSO/data sources)",
+          "First Radar Index published"
+        ],
+        "exit": [
+          "≥50% clients add a module",
+          "2–3 partner channels live; dev onboarding < 1h"
+        ]
+      }
+    ],
+    "clientPlatform": {
+      "thesis": "From Literacy‑Led to Product‑Attached Growth (Outcome‑Proof)",
+      "stages": [
+        "Phase 1 – Land with Compliance Literacy: Article 4 Literacy Sprint + Governance Memory (Board Pack evidence)",
+        "Phase 2 – Governed Adoption (90 days): Pilot one workflow with guardrails; measure KPI deltas; update Board Pack",
+        "Phase 3 – Benchmarks & Expansion (6–12 months): Add Comms Benchmark + Incident Playbooks; partner channels"
+      ],
+      "icp": [
+        "£100m–£2bn revenue; 200–4,000 FTE",
+        "Sectors: Professional Services, Retail/e‑com, FS‑ops, Media",
+        "Triggers: Compliance deadline; ≥£750k agency/BPO spend; shadow AI; high‑stakes campaigns",
+        "Politics: partner‑first; incumbent bias; low disruption; strict data boundaries"
+      ],
+      "channels": [
+        "Legal/risk boutiques and PR/comms suites",
+        "Microsoft/ServiceNow ecosystem partners",
+        "Board/peer referrals from BN’s C‑suite alumni",
+        "BN Edition as a marketing engine"
+      ],
+      "pricing": [
+        "Literacy Sprint: Foundation entry (Article 4 readiness)",
+        "Trust Layer: £100-180k foundation, £180-300k annual retainer (governance enablement)",
+        "Platform Integration: £200-400k+ (orchestrated intelligence)",
+        "Value-based pricing: Tied to $2-10M back-office ROI; 2-4 month payback period"
+      ],
+      "operatingModel": [
+        "Appoint AI Success Managers with commercial KPIs",
+        "Instrument telemetry in every sprint",
+        "Publish anonymised benchmarks → data moat"
+      ],
+      "execution180": {
+        "day0_30": [
+          "Run 12 Founding‑Member Article 4 Literacy Sprints",
+          "Deploy Governance Memory; deliver Board Packs"
+        ],
+        "day31_90": [
+          "Pilot one workflow per client with guardrails",
+          "Measure before/after; update Board Packs"
+        ],
+        "day91_180": [
+          "Expand with Benchmark + Playbooks; sign 12‑month plans",
+          "Publish first Radar Index; secure 2–3 partner channels"
+        ]
+      },
+      "guardrails": [
+        "One ask per stage: Literacy → Adoption → Expansion",
+        "Trust & workflow fit over feature bloat; minimize disruption; improve over time",
+        "Show, don’t tell; embedded guardrails; focus on replacing external spend, not headcount"
+      ]
+    },
+    "vision": {
+      "source": "platform-vision.md",
+      "narrative": [
+        "Why now: 95% of AI projects fail due to organizational learning gaps, not models (MIT research).",
+        "The Prototype Paradox: Organizations can't learn fast enough. We fix the three barriers: Literacy, Tools, Governance.",
+        "Our approach: Literacy-first → Governance embedded → Intelligence orchestrated. From stuck to value in weeks, not months."
+      ],
+      "prototypeParadox": [
+        "MIT validation: 95% of AI pilots fail because organizations can't learn fast enough",
+        "External partnerships succeed at 66% vs 33% for internal builds",
+        "Back-office ROI: $2-10M savings opportunity (BPO elimination, agency reduction)",
+        "Market window: 18 months before vendor lock-in",
+        "Primary buyers: CFO/COO/CRO (cost-focused) then expand to CCO (visibility-focused)"
+      ],
+      "why": [
+        "Adoption fails due to organizational learning gaps (not models)",
+        "Make literacy visible (Diagnostics, Heatmap), embed governance (Risk Radar), prove outcomes (Board Pack)"
+      ],
+      "architecture": [
+        "Layer 1 - Human Intelligence: Diagnose & frame (Diagnostics, Literacy Heatmap, Resources, Board Pack)",
+        "Layer 2 - Governance & Risk: Trust at scale (Risk Radar, guarded workflows, compliance, audit trails)",
+        "Layer 3 - Agent Orchestration: Solve & prove (multi-agent coordination, telemetry, learning systems)"
+      ],
+      "ladder": [
+        "L0 Dark", "L1 Visible", "L2 Evidenced", "L3 Learning System", "L4 Orchestrated Intelligence"
+      ],
+      "principles": [
+        "Human‑in‑the‑loop where it matters; agents where it accelerates",
+        "Evidence over opinion; governance by design; privacy by default",
+        "One ask per stage; minimize disruption; improve over time"
+      ],
+      "v1": [
+        "Heatmap exists and exportable", "1 guarded workflow with audit and KPI deltas", "Board‑grade pack delivered"
+      ],
+      "kpis": [
+        "TTFV ≤ 7 days", "≥60% L1 coverage in 30 days", "≥30% cycle‑time reduction", "≥90% evidence completeness"
+      ]
+    },
+    "v1Wireframe": {
+      "source": "platform-v1-brief.md",
+      "company": "Company X",
+      "nav": ["Diagnostics", "Literacy", "Resources", "Workflow", "Board Pack", "Backlog"],
+      "panels": [
+        {"title": "Tenant Header", "desc": "Org name, roles, quick links"},
+        {"title": "Diagnostics", "desc": "10‑question readiness; initiatives list"},
+        {"title": "Literacy Heatmap", "desc": "Audience × Domain levels 0–4"},
+        {"title": "Resources & Curricula", "desc": "Role‑based resources, activities"},
+        {"title": "Workflow Pilot", "desc": "Submit → Approve → Log; PII redaction"},
+        {"title": "Board Pack", "desc": "Evidence export (PDF/CSV)"}
+      ],
+      "heatmap": {
+        "levels": ["L0 - Dark", "L1 - Visible", "L2 - Evidenced", "L3 - Learning", "L4 - Orchestrated"],
+        "audiences": ["Leaders", "Practitioners", "Technical"],
+        "domains": ["Team Readiness", "Process Maturity", "System Capability"],
+        "matrix": [
+          [0, 1, 0],
+          [1, 2, 1],
+          [2, 2, 2],
+          [2, 3, 3],
+          [3, 3, 4]
+        ]
+      }
+    }
+  }</script>
+
+  <!-- Embedded Markdown for PoC Plan -->
+  <script id="plan-markdown" type="text/plain">## PoC Realignment Plan: Literacy-First Platform
+
+**Status**: ✅ Phase 1 Complete (76%) - Approved for Phase 2 by AI Architect
+
+**Live PoC**: [Open PoC](/dashboard) | **GitHub**: [brilliant-noise-strategy](https://github.com/jasonlryan/brilliant-noise-strategy)
+
+### Overview
+
+Reposition the PoC from a "Risk & Compliance Tool" to a literacy-led intelligence platform. Ship a thin vertical slice that proves the journey: Diagnostics → Literacy Heatmap → Board Pack → Resources, then deepen capabilities with Risk Radar (Layer 2) and orchestration (Layer 3).
+
+### Critical Findings
+
+- Current PoC is oriented as a risk tool; we need literacy-first framing.
+- Navigation should reflect the journey and outcomes, not implementation areas.
+- Early proof requires a minimal loop: capture signals, reflect literacy, produce evidence.
+
+### Information Architecture (initial)
+
+- Diagnostics → Literacy Map → Board Pack
+- Add Resources after the vertical slice is working to reinforce literacy and evidence.
+- Introduce additional sections (Workflows, Settings/Governance) after P0 is proven.
+
+### Phase 1: Vertical Slice (Week 1–2) ✅ COMPLETE (76%)
+
+1. ✅ Diagnostics (10-question survey)
+   - LocalStorage persistence implemented
+   - Captures baseline literacy and KPIs
+   - Instant scoring with L0-L4 maturity level
+
+2. ✅ Literacy Heatmap (Audience × Domain grid)
+   - Leaders/Practitioners/Technical × Team/Process/System
+   - Reflects diagnostic signals into the map
+   - CSV export implemented
+   - Interactive cell selection with evidence display
+
+3. ✅ Board Pack (Article 4 evidence)
+   - Baseline, current, target KPI dashboard
+   - Article 4 requirement mapping with evidence
+   - Literacy breakdown by audience
+   - Print-to-PDF ready with professional styling
+
+4. ✅ Resources Library
+   - 12 resources from `04-Data/`, `0.1 Prompts/`, `08-Consolidated-Files`
+   - Tagged by audience/domain
+   - Full filtering (search, audience, domain, type)
+
+5. ✅ Strategy Tab Updated
+   - Three-tier architecture visualized (Literacy, Risk/Governance, Orchestration)
+   - Risk Radar positioned as Layer 2
+   - Prototype Paradox and MIT validation included
+   - Back-office ROI ($2-10M) and partnership model (66% vs 33%)
+
+**Phase 1 Deliverables Achieved**
+
+- ✅ Users complete Diagnostics and see baseline reflected in Heatmap
+- ✅ Board Pack renders with baseline, KPI deltas, Article 4 evidence
+- ✅ Resources show real artifacts from business plan folders
+- ✅ Navigation reflects literacy-first journey
+- ✅ Homepage repositioned to literacy-first intelligence platform
+
+### Phase 2: Risk & Governance Layer (Week 2–4) → IN PROGRESS
+
+**Focus**: Activate Layer 2 (Risk Radar) with guarded workflows
+
+5. ⏳ Diagnostics edit capability (Story #5 - Quick Win)
+   - Pre-fill existing responses
+   - Allow updates and re-submission
+   - **Effort**: 2-3 hours
+
+6. ⏳ Heatmap filters (Story #9 - Quick Win)
+   - Add audience/domain filter dropdowns
+   - **Effort**: 2-3 hours
+
+7. → Guarded Workflow Pilot (Stories #19-22 - Core Phase 2)
+   - **Risk Radar Activation**: Support Ops or Document Ops workflow
+   - Human-in-the-loop approvals with audit trail
+   - PII redaction (basic pattern matching)
+   - KPI delta calculation (cycle-time before/after)
+   - **Effort**: 2-3 weeks
+
+8. → Governance Memory (Stories #23-25)
+   - Policy repository (add/view policies)
+   - Attendance/attestation tracking
+   - Evidence completeness gate
+   - **Effort**: 1-2 weeks
+
+### Phase 3: Enhance Existing (Week 4–5)
+
+8. Transformation page
+
+   - Add organization distribution, resource links, and L4 level.
+
+9. Play Cards integration
+
+   - Map Play Cards to Audience × Domain; show suggested next steps.
+
+10. Home/Dashboard
+
+- Journey stepper (Stuck → Visible → Evidenced → Learning → Orchestrated) with "What’s Next" CTAs.
+
+### Phase 4: Integration & Polish (Week 5–7)
+
+11. Business plan integration
+
+- Deepen linkage to `04-Data/`, `0.1 Prompts/`, `08-Consolidated-Files` across features.
+
+12. Tenant/org model (stub)
+
+- Simple JSON/env-based org identity; prepare for multi-tenant later.
+
+13. Settings/Governance
+
+- Centralize controls and evidence configuration.
+
+14. Evidence-first UX
+
+- Tighten flows around collecting, reviewing, and surfacing evidence.
+
+### Success Criteria
+
+- The product reads as a literacy platform, not a risk tool.
+- The journey is clear in navigation and copy.
+- Users can generate a Board Pack with Article 4 evidence.
+- KPIs show impact: TTFE ≤ 10 days, TTFW ≤ 14 days.
+
+### Acceptance Tests
+
+Phase 1
+
+- Diagnostics → submit responses → baseline and 2 KPIs update.
+- Heatmap reflects 1–2 signals from Diagnostics.
+- Board Pack renders with baseline and Article 4 mapping; printable to PDF.
+
+Phase 2
+
+- Resources list ingests from business plan folders and filters by audience/domain.
+- Heatmap edits persist and export as CSV/PNG.
+
+Phase 3
+
+- Play Cards link from Heatmap cells; Transformation page shows org distribution.
+
+Phase 4
+
+- All content links resolve; simple tenant ID changes scope of data.
+
+### Risks & Mitigations
+
+- Scope creep: Anchor to the vertical slice; defer workflow automation.
+- Design churn: Ship defaults first; polish once the slice is validated.
+- Dependency drift: Keep UI libs aligned with React 19; avoid workarounds where possible.
+
+### Technical Notes
+
+- React 19 peer-dependency conflict observed (e.g., `vaul@0.9.9`). Prefer upgrading or replacing with Radix Drawer rather than relying on `--legacy-peer-deps` for long term. For PoC speed, `--legacy-peer-deps` is acceptable.
+- Persistence: Use in-memory or JSON for Diagnostics in PoC; add database later.
+- Export: Start with print-to-PDF for Board Pack (e.g., dedicated `/qbr`-style page).
+
+### Immediate Next Steps (Week 1)
+
+1. Create Diagnostics page capturing 10 questions with local persistence.
+2. Seed Literacy Heatmap with Audience × Domain grid and reflect Diagnostics signals.
+3. Build first-pass Board Pack page with baseline, deltas, and Article 4 mapping.
+4. Wire Resources list to `04-Data/` and `08-Consolidated-Files` with simple tagging.
+
+### Week 2
+
+5. Add print-to-PDF and improve Board Pack template.
+6. Replace or upgrade any React 19-incompatible libs; remove legacy peer deps where feasible.
+
+### Repo References
+
+- PoC code (submodule) at `PoC/` mapped to `https://github.com/jasonlryan/brilliant-noise-strategy`.
+- Business plan content folders used for Resources: `04-Data/`, `0.1 Prompts/`, `08-Consolidated-Files`.
+  </script>
+
+  <script>
+    const qs = s => document.querySelector(s);
+    const qsa = s => Array.from(document.querySelectorAll(s));
+    const data = JSON.parse(qs('#dataset').textContent);
+
+    function renderAxis() {
+      const axis = qs('#week-axis');
+      axis.innerHTML = '';
+      for (let i = 0; i <= 24; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = i;
+        axis.appendChild(cell);
+      }
+    }
+
+    function weeksToPxRange(container, startWeek, endWeek) {
+      const pad = 4; // inner padding
+      const w = container.clientWidth - pad * 2;
+      const maxWeek = 24;
+      const left = Math.round(w * (startWeek / maxWeek)) + pad;
+      const width = Math.max(24, Math.round(w * ((endWeek - startWeek) / maxWeek)));
+      return { left, width };
+    }
+
+    function daysToPxRange(container, startDay, endDay) {
+      const pad = 4; const w = container.clientWidth - pad * 2; const maxDay = 180;
+      const left = Math.round(w * (startDay / maxDay)) + pad;
+      const width = Math.max(24, Math.round(w * ((endDay - startDay) / maxDay)));
+      return { left, width };
+    }
+
+    function makeList(items) {
+      const ul = document.createElement('ul');
+      items.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+      return ul;
+    }
+
+    function renderPhases() {
+      const host = qs('#phase-cards');
+      const intro = qs('#phases-intro');
+      host.innerHTML = '';
+      if (intro) {
+        intro.innerHTML = `<div class="meta">How we build the platform in increments, mapped to the maturity ladder (L0→L4). Each phase ladders up to the Vision and enables the Client Platform steps.</div>`;
+      }
+      data.phases.forEach((p, idx) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const title = document.createElement('h3');
+        title.textContent = p.name;
+        card.appendChild(title);
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        meta.textContent = `Weeks ${p.startWeek}–${p.endWeek}`;
+        card.appendChild(meta);
+
+        const tl = document.createElement('div');
+        tl.className = 'timeline';
+        const bar = document.createElement('div');
+        bar.className = `bar ${p.class}`;
+        bar.textContent = `W${p.startWeek}–${p.endWeek}`;
+        tl.appendChild(bar);
+        card.appendChild(tl);
+
+        // Defer sizing to next frame for accurate container width
+        requestAnimationFrame(() => {
+          const { left, width } = weeksToPxRange(tl, p.startWeek, p.endWeek);
+          bar.style.left = left + 'px';
+          bar.style.width = width + 'px';
+        });
+
+        const d1 = document.createElement('details');
+        d1.innerHTML = '<summary>Objectives</summary>';
+        d1.appendChild(makeList(p.objectives));
+        card.appendChild(d1);
+
+        const d2 = document.createElement('details');
+        d2.innerHTML = '<summary>Scope</summary>';
+        d2.appendChild(makeList(p.scope));
+        card.appendChild(d2);
+
+        const d3 = document.createElement('details');
+        d3.innerHTML = '<summary>Artifacts</summary>';
+        d3.appendChild(makeList(p.artifacts));
+        card.appendChild(d3);
+
+        const d4 = document.createElement('details');
+        d4.innerHTML = '<summary>Owners</summary>';
+        d4.appendChild(makeList(p.owners));
+        card.appendChild(d4);
+
+        const d5 = document.createElement('details');
+        d5.innerHTML = '<summary>Exit Criteria</summary>';
+        d5.appendChild(makeList(p.exit));
+        card.appendChild(d5);
+
+        host.appendChild(card);
+      });
+    }
+
+    function renderReleaseTrain() {
+      const host = qs('#release-cards');
+      const intro = qs('#release-intro');
+      host.innerHTML = '';
+      if (intro) {
+        intro.innerHTML = `<div class="meta">Client Launch Plan aligned to the Client Platform narrative: Day 0–30 (visibility), Day 31–90 (one workflow), Day 91–180 (expansion).</div>`;
+      }
+      data.releaseTrain.forEach((r) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const title = document.createElement('h3');
+        title.textContent = r.name;
+        card.appendChild(title);
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        meta.textContent = `Days ${r.startDay}–${r.endDay}`;
+        card.appendChild(meta);
+
+        const tl = document.createElement('div');
+        tl.className = 'timeline';
+        const bar = document.createElement('div');
+        bar.className = `bar ${r.class}`;
+        bar.textContent = `${r.startDay}–${r.endDay}d`;
+        tl.appendChild(bar);
+        card.appendChild(tl);
+
+        requestAnimationFrame(() => {
+          const { left, width } = daysToPxRange(tl, r.startDay, r.endDay);
+          bar.style.left = left + 'px';
+          bar.style.width = width + 'px';
+        });
+
+        const d1 = document.createElement('details');
+        d1.innerHTML = '<summary>Deliverables</summary>';
+        d1.appendChild(makeList(r.deliverables));
+        card.appendChild(d1);
+
+        const d2 = document.createElement('details');
+        d2.innerHTML = '<summary>Exit Criteria</summary>';
+        d2.appendChild(makeList(r.exit));
+        card.appendChild(d2);
+
+        host.appendChild(card);
+      });
+    }
+
+    function setTab(which) {
+      const tabs = ['vision', 'client', 'wireframe', 'phases', 'release', 'plan'];
+      tabs.forEach(t => {
+        qs(`#tab-${t}`).setAttribute('aria-selected', (t === which) ? 'true' : 'false');
+        qs(`#view-${t}`).style.display = (t === which) ? '' : 'none';
+      });
+      // Recompute visuals after layout shifts
+      setTimeout(() => { renderPhases(); renderReleaseTrain(); renderClientPlatform(); renderVision(); renderWireframe(); renderPlan(); }, 0);
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    }
+
+    // Minimal Markdown → HTML (headings, paragraphs, ul/ol lists)
+    function markdownToHtml(md) {
+      const lines = md.split(/\r?\n/);
+      let html = '';
+      let inUl = false, inOl = false;
+      const closeLists = () => { if (inUl) { html += '</ul>'; inUl = false; } if (inOl) { html += '</ol>'; inOl = false; } };
+      for (const raw of lines) {
+        const line = raw.trimEnd();
+        if (!line.trim()) { closeLists(); html += ''; continue; }
+        if (line.startsWith('### ')) { closeLists(); html += `<h3>${escapeHtml(line.slice(4))}</h3>`; continue; }
+        if (line.startsWith('## ')) { closeLists(); html += `<h2>${escapeHtml(line.slice(3))}</h2>`; continue; }
+        if (line.startsWith('# ')) { closeLists(); html += `<h1>${escapeHtml(line.slice(2))}</h1>`; continue; }
+        const olMatch = line.match(/^(\d+)\.\s+(.*)$/);
+        if (olMatch) {
+          if (!inOl) { closeLists(); html += '<ol>'; inOl = true; }
+          html += `<li>${escapeHtml(olMatch[2])}</li>`; continue;
+        }
+        const ulMatch = line.match(/^[-•]\s+(.*)$/);
+        if (ulMatch) {
+          if (!inUl) { closeLists(); html += '<ul>'; inUl = true; }
+          html += `<li>${escapeHtml(ulMatch[1])}</li>`; continue;
+        }
+        closeLists();
+        html += `<p>${escapeHtml(line)}</p>`;
+      }
+      closeLists();
+      return html;
+    }
+
+    function renderPlan() {
+      const host = qs('#plan-content'); if (!host) return;
+      const md = qs('#plan-markdown')?.textContent || '';
+      host.innerHTML = markdownToHtml(md);
+    }
+
+    function copyDatasetJson() {
+      const json = JSON.stringify(data, null, 2);
+      navigator.clipboard.writeText(json).then(() => {
+        alert('Dataset JSON copied to clipboard');
+      }).catch(() => {
+        const w = window.open();
+        w.document.write('<pre>' + json.replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])) + '</pre>');
+        w.document.close();
+      });
+    }
+
+    function linkToFile(path, label) {
+      const a = document.createElement('a');
+      a.href = path; a.textContent = label || path; a.className = 'meta';
+      a.style.textDecoration = 'none'; a.style.color = 'var(--accent)';
+      return a;
+    }
+
+    function renderVision() {
+      const host = qs('#vision-cards'); if (!host) return; host.innerHTML = '';
+      const v = data.vision;
+      const intro = qs('#vision-intro'); if (intro) { intro.innerHTML = `<div class=\"meta\">${v.narrative.join(' • ')}</div>`; }
+      const mk = (title, list, colorClass) => {
+        const c = document.createElement('div');
+        c.className='card';
+        if (colorClass) c.style.borderLeft = colorClass;
+        const h=document.createElement('h3');
+        h.textContent=title;
+        c.appendChild(h);
+        c.appendChild(makeList(list));
+        return c;
+      };
+      const src = document.createElement('div'); src.className='card'; const h=document.createElement('h3'); h.textContent='Source'; src.appendChild(h); src.appendChild(linkToFile(v.source, v.source));
+      host.appendChild(src);
+      // Add Prototype Paradox prominently
+      host.appendChild(mk('The Prototype Paradox (Competitive Advantage)', v.prototypeParadox, '4px solid var(--accent-3)'));
+      host.appendChild(mk('Why Literacy-First', v.why));
+      host.appendChild(mk('Three-Tier Architecture', v.architecture, '4px solid var(--accent)'));
+      host.appendChild(mk('Maturity Ladder (L0→L4)', v.ladder));
+      host.appendChild(mk('Principles', v.principles));
+      host.appendChild(mk('V1 Outcomes', v.v1));
+      // Replace original KPIs block with Fast Three + Gates
+      const fast = document.createElement('div'); fast.className='card'; fast.innerHTML = '<h3>KPIs (Fast Three + Gates)</h3>';
+      fast.appendChild(makeList([
+        'Time‑to‑First‑Evidence (TTFE): first export or DDR with evidence (≤ 10 days)',
+        'Time‑to‑First‑Workflow (TTFW): first guarded workflow run (≤ 14 days)',
+        'First ROI Hypothesis Filed: DDR linking baseline and expected impact (≤ 14 days)'
+      ]));
+      const gates = document.createElement('div'); gates.className='card'; gates.innerHTML = '<h3>Gates (binary)</h3>';
+      gates.appendChild(makeList([
+        'Evidence completeness: Board Pack includes policy, literacy heatmap, and baseline KPI',
+        'Governance in place: PII redaction and approval path documented'
+      ]));
+      host.appendChild(fast);
+      host.appendChild(gates);
+    }
+
+    function renderWireframe() {
+      const grid = qs('#wf-grid'); if (!grid) return; grid.innerHTML = '';
+      const wf = data.v1Wireframe;
+      // layout boxes
+      const boxes = [
+        {r:1,c:1,rs:1,cs:3,title:wf.panels[0].title,desc:wf.panels[0].desc},
+        {r:2,c:1,rs:2,cs:1,title:wf.panels[1].title,desc:wf.panels[1].desc},
+        {r:2,c:2,rs:2,cs:2,title:wf.panels[2].title,desc:wf.panels[2].desc},
+        {r:4,c:1,rs:2,cs:2,title:wf.panels[3].title,desc:wf.panels[3].desc},
+        {r:4,c:3,rs:1,cs:1,title:wf.panels[4].title,desc:wf.panels[4].desc},
+        {r:5,c:3,rs:1,cs:1,title:wf.panels[5].title,desc:wf.panels[5].desc}
+      ];
+      boxes.forEach(b => {
+        const el = document.createElement('div'); el.className='wf-box';
+        el.style.gridRow = `${b.r} / span ${b.rs}`; el.style.gridColumn = `${b.c} / span ${b.cs}`;
+        const t = document.createElement('div'); t.className='wf-title'; t.textContent=b.title; el.appendChild(t);
+        const d = document.createElement('div'); d.className='wf-desc'; d.textContent=b.desc; el.appendChild(d);
+        grid.appendChild(el);
+        el.id = `wf-panel-${b.title.replace(/\s+/g,'-').toLowerCase()}`;
+      });
+      // cards with details
+      const host = qs('#wireframe-cards'); host.innerHTML = '';
+      const nav = document.createElement('div'); nav.className='card'; nav.innerHTML = '<h3>Primary Navigation</h3>';
+      const ul = document.createElement('ul');
+      wf.nav.forEach(label => {
+        const li = document.createElement('li');
+        const a = document.createElement('a'); a.href = '#'; a.textContent = label; a.style.color='var(--accent)'; a.style.textDecoration='none';
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = `wf-panel-${label.replace(/\s+/g,'-').toLowerCase()}`;
+          qsa('.wf-box').forEach(b => b.style.outline = 'none');
+          const target = document.getElementById(id);
+          if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); target.style.outline = '2px solid var(--accent)'; setTimeout(()=>{ target.style.outline='none'; }, 1200); }
+        });
+        li.appendChild(a); ul.appendChild(li);
+      });
+      nav.appendChild(ul); host.appendChild(nav);
+      const src = document.createElement('div'); src.className='card'; src.innerHTML = `<h3>Source</h3><div class='meta'>${wf.company || ''}</div>`;
+      src.appendChild(linkToFile(wf.source, wf.source)); host.appendChild(src);
+
+      // Heatmap card - Updated to match PoC structure (Audience × Domain)
+      const heat = document.createElement('div'); heat.className='card'; heat.innerHTML = '<h3>Literacy Heatmap (Audience × Domain × Maturity Level)</h3>';
+      const table = document.createElement('table'); table.style.width='100%'; table.style.borderCollapse='collapse';
+      const thead = document.createElement('thead'); const trh = document.createElement('tr');
+      trh.appendChild(document.createElement('th')); // corner cell
+      (wf.heatmap && wf.heatmap.domains || []).forEach(d => {
+        const th = document.createElement('th');
+        th.textContent = d;
+        th.style.textAlign='center';
+        th.style.padding='8px';
+        th.style.borderBottom='1px solid var(--border)';
+        th.style.fontSize='12px';
+        trh.appendChild(th);
+      });
+      thead.appendChild(trh); table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      (wf.heatmap && wf.heatmap.audiences || []).forEach((aud, audIdx) => {
+        const tr = document.createElement('tr');
+        const th = document.createElement('th');
+        th.textContent = aud;
+        th.style.padding='8px';
+        th.style.borderBottom='1px dashed var(--border)';
+        th.style.fontSize='12px';
+        th.style.fontWeight='600';
+        tr.appendChild(th);
+        (wf.heatmap.domains || []).forEach((dom, domIdx) => {
+          const td = document.createElement('td');
+          td.style.padding='8px';
+          td.style.borderBottom='1px dashed var(--border)';
+          td.style.textAlign='center';
+          // Get score from matrix - now it's audiences × domains
+          const score = wf.heatmap.matrix && wf.heatmap.matrix[audIdx] ? wf.heatmap.matrix[audIdx][domIdx] : 0;
+          const intensity = Math.min(1, score/4);
+          td.style.background = `linear-gradient(90deg, rgba(91,156,255,${0.2*intensity}), rgba(139,214,167,${0.2*intensity}))`;
+          const levelLabel = wf.heatmap.levels[score] || `L${score}`;
+          td.textContent = levelLabel;
+          td.style.fontSize='11px';
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      heat.appendChild(table);
+      const note = document.createElement('div');
+      note.className = 'meta';
+      note.style.marginTop = '8px';
+      note.textContent = 'Matrix shows current implementation: Leaders/Practitioners/Technical × Team/Process/System with L0-L4 maturity levels';
+      heat.appendChild(note);
+      host.appendChild(heat);
+    }
+
+    function renderClientPlatform() {
+      const host = qs('#client-cards');
+      const intro = qs('#client-intro');
+      if (!host) return;
+      host.innerHTML = '';
+      const cp = data.clientPlatform;
+      if (intro) {
+        intro.innerHTML = `<div class=\"meta\">An accessible overview for new audiences: what we offer, who it serves, how value shows up, and how we keep it safe. Start with visibility, then prove impact with one workflow, then expand.</div>`;
+      }
+      const simpleCard = (title, items) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const h = document.createElement('h3'); h.textContent = title; card.appendChild(h);
+        if (Array.isArray(items)) { card.appendChild(makeList(items)); }
+        else if (typeof items === 'string') { const p = document.createElement('div'); p.className='meta'; p.textContent = items; card.appendChild(p); }
+        return card;
+      };
+
+      host.appendChild(simpleCard('Thesis', cp.thesis));
+      host.appendChild(simpleCard('Stages', cp.stages));
+      host.appendChild(simpleCard('ICP (UK/EU)', cp.icp));
+      host.appendChild(simpleCard('Channels', cp.channels));
+      host.appendChild(simpleCard('Pricing & Commercials', cp.pricing));
+      host.appendChild(simpleCard('Operating Model', cp.operatingModel));
+
+      const exec = document.createElement('div');
+      exec.className = 'card';
+      exec.innerHTML = '<h3>180‑Day Execution Plan</h3>';
+      const d1 = document.createElement('details'); d1.innerHTML = '<summary>Day 0–30</summary>'; d1.appendChild(makeList(cp.execution180.day0_30)); exec.appendChild(d1);
+      const d2 = document.createElement('details'); d2.innerHTML = '<summary>Day 31–90</summary>'; d2.appendChild(makeList(cp.execution180.day31_90)); exec.appendChild(d2);
+      const d3 = document.createElement('details'); d3.innerHTML = '<summary>Day 91–180</summary>'; d3.appendChild(makeList(cp.execution180.day91_180)); exec.appendChild(d3);
+      host.appendChild(exec);
+
+      host.appendChild(simpleCard('Guardrails', cp.guardrails));
+    }
+
+    // Init
+    renderAxis();
+    renderVision();
+    renderClientPlatform();
+    renderWireframe();
+    renderPhases();
+    renderReleaseTrain();
+    renderPlan();
+    window.addEventListener('resize', () => { renderPhases(); renderReleaseTrain(); renderWireframe(); });
+
+    qs('#tab-vision').addEventListener('click', () => setTab('vision'));
+    qs('#tab-client').addEventListener('click', () => setTab('client'));
+    qs('#tab-wireframe').addEventListener('click', () => setTab('wireframe'));
+    qs('#tab-phases').addEventListener('click', () => setTab('phases'));
+    qs('#tab-release').addEventListener('click', () => setTab('release'));
+    qs('#btn-toggle-axis').addEventListener('click', () => {
+      const el = qs('#axis');
+      el.style.display = (el.style.display === 'none' || el.style.display === '') ? '' : 'none';
+    });
+    qs('#btn-copy-json').addEventListener('click', copyDatasetJson);
+    qs('#tab-plan').addEventListener('click', () => setTab('plan'));
+  </script>
+</body>
+</html>
+

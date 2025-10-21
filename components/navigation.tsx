@@ -4,56 +4,63 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { 
-  Shield, 
-  Activity, 
-  BookOpen, 
-  BarChart3, 
+import {
+  Shield,
+  Activity,
+  BookOpen,
+  BarChart3,
   FileText,
-  Settings,
-  User,
-  Bell,
-  Search,
   Home,
-  ChevronDown,
   AlertTriangle,
   TrendingUp,
   CheckCircle,
   Award,
-  Users,
-  CreditCard,
-  Map
+  Map,
+  ClipboardList
 } from "lucide-react"
 
 const navigationItems = [
   {
     title: "Executive Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: Home,
     description: "Strategic overview and key insights",
     stage: "overview"
   },
   {
-    title: "Risk Exposure",
-    href: "/risk-exposure",
-    icon: AlertTriangle,
-    description: "Real-time AI risk monitoring",
-    badge: "3 ACTIVE",
-    stage: "automate"
+    title: "Diagnostics",
+    href: "/diagnostics",
+    icon: ClipboardList,
+    description: "AI literacy baseline assessment",
+    stage: "literacy",
+    badge: "START HERE"
   },
   {
-    title: "EU AI Act Compliance",
-    href: "/eu-ai-act",
-    icon: Shield,
-    description: "Regulatory readiness & compliance tracking",
-    badge: "75%",
-    stage: "automate"
+    title: "Literacy Map",
+    href: "/literacy-map",
+    icon: Map,
+    description: "Audience × Domain readiness heatmap",
+    stage: "literacy"
+  },
+  {
+    title: "Board Pack",
+    href: "/board-pack",
+    icon: FileText,
+    description: "Article 4 evidence & compliance report",
+    stage: "literacy"
+  },
+  {
+    title: "Resources",
+    href: "/resources",
+    icon: BookOpen,
+    description: "Role-based learning materials",
+    stage: "literacy"
   },
   {
     title: "Transformation Journey",
     href: "/transformation",
     icon: TrendingUp,
-    description: "Automate → Augment → Transform progress",
+    description: "Stuck → Visible → Evidenced → Learning → Orchestrated",
     stage: "augment"
   },
   {
@@ -64,25 +71,11 @@ const navigationItems = [
     stage: "transform"
   },
   {
-    title: "Customer Success",
-    href: "/customer-success",
-    icon: Users,
-    description: "Value realization and QBR management",
-    stage: "transform"
-  },
-  {
     title: "Strategy",
     href: "/strategy",
     icon: Map,
     description: "Strategic overview, roadmap, and methodology",
     stage: "overview"
-  },
-  {
-    title: "Subscription",
-    href: "/subscription",
-    icon: CreditCard,
-    description: "Manage your plan and billing",
-    stage: "settings"
   }
 ]
 
@@ -94,9 +87,9 @@ export function MainNavigation() {
       <div className="container flex h-16 items-center">
         {/* Logo and Brand */}
         <div className="mr-8">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/dashboard" className="flex items-center space-x-2">
             <Shield className="h-6 w-6 text-blue-600" />
-            <span className="font-bold text-xl">AI Risk & Trust Radar</span>
+            <span className="font-bold text-xl">BrilliantNoise</span>
           </Link>
         </div>
 
@@ -126,23 +119,6 @@ export function MainNavigation() {
           })}
         </nav>
 
-        {/* Right Side Actions */}
-        <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-            <Search className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-            <Bell className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-            <Settings className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="sm" className="flex items-center space-x-2">
-            <User className="h-4 w-4" />
-            <span className="hidden md:inline">Admin</span>
-            <ChevronDown className="h-3 w-3" />
-          </Button>
-        </div>
       </div>
     </header>
   )
@@ -156,7 +132,7 @@ export function SidebarNavigation() {
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            AI Risk & Trust Radar
+            BrilliantNoise
           </h2>
           <div className="space-y-1">
             {navigationItems.map((item) => {
@@ -215,11 +191,11 @@ export function BreadcrumbNavigation() {
     pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
   )
   
-  if (!currentPage || pathname === "/") return null
+  if (!currentPage || pathname === "/dashboard") return null
   
   return (
     <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-6">
-      <Link href="/" className="hover:text-foreground">
+      <Link href="/dashboard" className="hover:text-foreground">
         Dashboard
       </Link>
       <span>/</span>

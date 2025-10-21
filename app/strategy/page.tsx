@@ -28,93 +28,93 @@ import {
 
 const strategyPillars = [
   {
-    title: "Product-Led Growth",
-    description: "BN Trust OS as governance spine for AI-assisted communications",
-    icon: Shield,
+    title: "Literacy-First Intelligence",
+    description: "Cross the GenAI Divide through visible literacy, trusted governance, orchestrated outcomes",
+    icon: BookOpen,
     color: "text-blue-600",
-    href: "/strategy/commercial",
-    metrics: "£8m+ ARR target by year 3"
-  },
-  {
-    title: "Three-Stage Journey",
-    description: "Automate → Augment → Transform progression framework",
-    icon: TrendingUp,
-    color: "text-green-600",
     href: "/strategy/methodology",
-    metrics: "L0→L1→L2→L3 literacy ladder"
+    metrics: "95% of AI pilots fail - we fix the learning gap"
   },
   {
-    title: "Market Entry MVP",
-    description: "AI Risk & Trust Radar as beachhead product",
-    icon: Target,
+    title: "Back-Office ROI Beachhead",
+    description: "$2-10M savings opportunity in back-office operations (BPO elimination, agency reduction)",
+    icon: DollarSign,
+    color: "text-green-600",
+    href: "/strategy/commercial",
+    metrics: "CFO/COO buyers, 2-4 month payback"
+  },
+  {
+    title: "Partnership Success Model",
+    description: "External partnerships succeed at 66% vs 33% for internal builds (MIT validation)",
+    icon: Users,
     color: "text-purple-600",
-    href: "/strategy/roadmap",
-    metrics: "CCO-focused painkiller solution"
+    href: "/strategy/operating-model",
+    metrics: "Trusted partner, not vendor or consultant"
   },
   {
-    title: "Foundation Controls",
-    description: "Gate A controls ensuring production readiness",
-    icon: Settings,
-    color: "text-amber-600",
+    title: "Risk & Governance Layer",
+    description: "Risk Radar embedded in workflows: guarded execution, compliance, audit trails",
+    icon: Shield,
+    color: "text-red-600",
     href: "/strategy/foundation",
-    metrics: "Legal + SDLC + Security gates"
+    metrics: "Article 4 ready, human-in-the-loop by default"
   }
 ]
 
 const strategySections = [
   {
     title: "Product Roadmap",
-    description: "Multi-phase development plan from MVP to market leadership",
+    description: "Three-tier architecture rollout: Literacy foundation → Governance/Risk → Orchestration",
     icon: Map,
     href: "/strategy/roadmap",
-    status: "Q4 2024 - Platform Maturity",
+    status: "Phase 1 - 76% Complete",
     color: "border-blue-200",
-    features: ["Q4 2024: Scale & Reliability", "Q1 2025: AI Innovation", "Q2 2025: Market Expansion", "Q3 2025: Ecosystem & Community"]
-  },
-  {
-    title: "Operating Model",
-    description: "Team structure, cadence, and decision-making framework",
-    icon: Users,
-    href: "/strategy/operating-model",
-    status: "Weekly/Monthly/Quarterly rhythms",
-    color: "border-green-200",
-    features: ["Product Council", "CS/GTM Sync", "Release Reviews", "Strategy Reviews"]
-  },
-  {
-    title: "Commercial Strategy",
-    description: "Tiered pricing, market positioning, and sales approach",
-    icon: DollarSign,
-    href: "/strategy/commercial",
-    status: "Assess £3-5k → Assure+ custom",
-    color: "border-purple-200",
-    features: ["Assess tier", "Assure tier", "Assure+ tier", "Land & expand motion"]
-  },
-  {
-    title: "Foundation Status",
-    description: "Gate A controls and production readiness indicators",
-    icon: Shield,
-    href: "/strategy/foundation", 
-    status: "AMBER - In Progress",
-    color: "border-amber-200",
-    features: ["Legal & IP controls", "SDLC controls", "Security controls", "Binary gate system"]
+    features: ["Phase 1: Diagnostics, Heatmap, Board Pack", "Phase 2: Guarded Workflows, Risk Radar", "Phase 3: Multi-agent orchestration", "Phase 4: Enterprise scale"]
   },
   {
     title: "Methodology Framework",
-    description: "Literacy Ladder and Play Cards implementation approach",
+    description: "Five-level maturity model: Stuck → Visible → Evidenced → Learning → Orchestrated",
     icon: BookOpen,
     href: "/strategy/methodology",
-    status: "L1 88% completion rate",
+    status: "Literacy-first approach validated",
     color: "border-indigo-200",
-    features: ["L0→L3 progression", "Personal AI Scorecard", "12-week sprints", "Play Cards library"]
+    features: ["L0-L4 progression rubric", "Audience × Domain heatmap", "Role-based curricula", "Article 4 compliance"]
   },
   {
-    title: "Benchmark System",
-    description: "Industry benchmarking methodology and data approach",
-    icon: BarChart3,
-    href: "/strategy/benchmarks",
-    status: "Method defined, implementation pending",
-    color: "border-orange-200",
-    features: ["Coverage metrics", "Efficiency metrics", "Quality metrics", "Maturity scoring"]
+    title: "Risk & Governance Layer",
+    description: "Risk Radar: Trust at scale through embedded governance and real-time monitoring",
+    icon: Shield,
+    href: "/literacy-map",
+    status: "Layer 2 - Phase 2 Deployment",
+    color: "border-red-200",
+    features: ["Guarded workflows (human-in-loop)", "Risk monitoring & alerts", "Compliance enforcement", "Full audit trails"]
+  },
+  {
+    title: "Commercial Strategy",
+    description: "Value-based pricing tied to $2-10M back-office ROI potential",
+    icon: DollarSign,
+    href: "/strategy/commercial",
+    status: "CFO/COO buyer focus",
+    color: "border-green-200",
+    features: ["Literacy Sprint: Foundation entry", "Trust Layer: £100-300k retainer", "Platform integration: £200-400k+", "2-4 month payback period"]
+  },
+  {
+    title: "Operating Model",
+    description: "Partnership-led delivery (66% success rate vs 33% internal builds)",
+    icon: Users,
+    href: "/strategy/operating-model",
+    status: "Hybrid: 70% services, 30% platform",
+    color: "border-purple-200",
+    features: ["Fractional CTO partnership", "Three-role client model", "Product squad + CS team", "12-person target by Q1'26"]
+  },
+  {
+    title: "Foundation Status",
+    description: "Gate A controls and production readiness (Phase 0 complete)",
+    icon: Settings,
+    href: "/strategy/foundation",
+    status: "GREEN - Phase 0 Complete",
+    color: "border-emerald-200",
+    features: ["Legal & IP controls ✓", "SDLC controls ✓", "Security controls ✓", "Platform development initiated"]
   }
 ]
 
@@ -141,20 +141,20 @@ export default function StrategyOverviewPage() {
           <h1 className="text-4xl font-bold text-foreground">Strategy Overview</h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          From consultancy to AI transformation engine: Our roadmap to £8m+ ARR SaaS leadership
+          Literacy-First Intelligence Platform: Cross the GenAI Divide through visible literacy, trusted governance, and orchestrated intelligence
         </p>
         <div className="flex items-center justify-center gap-4">
           <Badge variant="outline" className="gap-2 border-blue-200 text-blue-700">
-            <Building className="h-3 w-3" />
-            Phase 1: Build the Beachhead
+            <BookOpen className="h-3 w-3" />
+            Literacy Foundation
+          </Badge>
+          <Badge variant="outline" className="gap-2 border-red-200 text-red-700">
+            <Shield className="h-3 w-3" />
+            Risk & Governance
           </Badge>
           <Badge variant="outline" className="gap-2 border-green-200 text-green-700">
-            <Target className="h-3 w-3" />
-            £8m ARR Target
-          </Badge>
-          <Badge variant="outline" className="gap-2 border-purple-200 text-purple-700">
-            <Award className="h-3 w-3" />
-            AI Transformation Engine
+            <TrendingUp className="h-3 w-3" />
+            Orchestrated Intelligence
           </Badge>
         </div>
       </div>
@@ -192,6 +192,93 @@ export default function StrategyOverviewPage() {
                   <span className={milestone.status === "completed" ? "text-green-600" : ""}>{milestone.name}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Three-Tier Platform Architecture */}
+      <Card className="border-l-4 border-l-purple-500">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Three-Tier Platform Architecture
+          </CardTitle>
+          <CardDescription>
+            Literacy-first foundation → Governance & risk → Orchestrated intelligence
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="space-y-3 p-4 border border-blue-200 rounded-lg bg-blue-50/50">
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-blue-600" />
+                <h4 className="font-semibold text-blue-900">Layer 1: Human Intelligence</h4>
+              </div>
+              <p className="text-sm text-blue-800">
+                Diagnose and frame opportunities through visible literacy
+              </p>
+              <ul className="text-xs space-y-1 text-blue-700">
+                <li>• <strong>Diagnostics:</strong> 10-question baseline assessment</li>
+                <li>• <strong>Literacy Heatmap:</strong> Audience × Domain visibility</li>
+                <li>• <strong>Resources:</strong> Role-based curricula and learning paths</li>
+                <li>• <strong>Evidence:</strong> Board Pack with Article 4 compliance</li>
+              </ul>
+              <div className="pt-2 text-xs font-medium text-blue-900">
+                ✓ Phase 1 - 76% Complete
+              </div>
+            </div>
+
+            <div className="space-y-3 p-4 border border-red-200 rounded-lg bg-red-50/50">
+              <div className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-red-600" />
+                <h4 className="font-semibold text-red-900">Layer 2: Governance & Risk</h4>
+              </div>
+              <p className="text-sm text-red-800">
+                Trust at scale through embedded risk monitoring and controls
+              </p>
+              <ul className="text-xs space-y-1 text-red-700">
+                <li>• <strong>Risk Radar:</strong> Real-time monitoring and alerts</li>
+                <li>• <strong>Guarded Workflows:</strong> Human-in-the-loop approvals</li>
+                <li>• <strong>Compliance:</strong> EU AI Act Article 4 enforcement</li>
+                <li>• <strong>Audit Trails:</strong> Full governance evidence chain</li>
+              </ul>
+              <div className="pt-2 text-xs font-medium text-red-900">
+                → Phase 2 - Workflow Pilots
+              </div>
+            </div>
+
+            <div className="space-y-3 p-4 border border-green-200 rounded-lg bg-green-50/50">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-green-600" />
+                <h4 className="font-semibold text-green-900">Layer 3: Agent Orchestration</h4>
+              </div>
+              <p className="text-sm text-green-800">
+                Solve and prove value through coordinated intelligence
+              </p>
+              <ul className="text-xs space-y-1 text-green-700">
+                <li>• <strong>Multi-Agent Systems:</strong> Coordinated workflows</li>
+                <li>• <strong>Telemetry:</strong> Outcomes tied to literacy progression</li>
+                <li>• <strong>Learning Systems:</strong> Continuous improvement loops</li>
+                <li>• <strong>Orchestration:</strong> Predictable, scaled outcomes</li>
+              </ul>
+              <div className="pt-2 text-xs font-medium text-green-900">
+                → Phase 3-4 - Scale & Orchestrate
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <div className="flex items-start gap-3">
+              <Award className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-semibold text-amber-900 text-sm">The Prototype Paradox</h4>
+                <p className="text-xs text-amber-800 mt-1">
+                  MIT research validates our thesis: 95% of AI pilots fail because organizations can't learn fast enough.
+                  Our three-tier architecture fixes this by making literacy visible (Layer 1), embedding governance early (Layer 2),
+                  and orchestrating proven workflows (Layer 3). External partnerships succeed at 66% vs 33% for internal builds.
+                </p>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -287,10 +374,10 @@ export default function StrategyOverviewPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            Three-Phase Transformation Roadmap
+            Three-Phase Business Transformation
           </CardTitle>
           <CardDescription>
-            Strategic progression from consultancy to SaaS leadership
+            Strategic progression: Foundation → Beachhead → Scale (Hybrid consultancy → Platform)
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -299,48 +386,48 @@ export default function StrategyOverviewPage() {
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-green-500" />
                 <h4 className="font-semibold">Phase 0: Fortify Foundation</h4>
-                <Badge variant="outline" className="text-xs">COMPLETE</Badge>
+                <Badge variant="outline" className="text-xs">✓ COMPLETE</Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                Resolve IP crisis, establish engineering discipline (Months 0-3)
+                IP controls, SDLC discipline, production readiness (Months 0-3)
               </p>
               <ul className="text-xs space-y-1 text-muted-foreground">
-                <li>• IP audit & new MSAs</li>
-                <li>• SDLC implementation</li>
-                <li>• DevOps professional hired</li>
-                <li>• Gate A controls active</li>
+                <li>✓ IP audit & new MSAs</li>
+                <li>✓ SDLC implementation</li>
+                <li>✓ Lee Davies (fractional CTO)</li>
+                <li>✓ Gate A controls GREEN</li>
               </ul>
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-blue-500" />
-                <h4 className="font-semibold">Phase 1: Build Beachhead</h4>
-                <Badge variant="secondary" className="text-xs">IN PROGRESS</Badge>
+                <h4 className="font-semibold">Phase 1: Literacy Foundation</h4>
+                <Badge variant="secondary" className="text-xs">76% DONE</Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                Launch Radar MVP, validate with early customers (Months 3-9)
+                Vertical slice: Diagnostics → Heatmap → Board Pack (Months 3-9)
               </p>
               <ul className="text-xs space-y-1 text-muted-foreground">
-                <li>• Radar MVP launch</li>
-                <li>• Founding Member Council</li>
-                <li>• AI Success Manager hire</li>
-                <li>• Framework development</li>
+                <li>✓ Diagnostics (10-question baseline)</li>
+                <li>✓ Literacy Heatmap (Audience × Domain)</li>
+                <li>✓ Board Pack (Article 4 evidence)</li>
+                <li>→ Guarded workflow pilots (Phase 2)</li>
               </ul>
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-gray-300" />
-                <h4 className="font-semibold">Phase 2: Scale Engine</h4>
-                <Badge variant="outline" className="text-xs">PLANNED</Badge>
+                <div className="w-3 h-3 rounded-full bg-amber-500" />
+                <h4 className="font-semibold">Phase 2: Risk & Governance</h4>
+                <Badge variant="outline" className="text-xs">NEXT</Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                Growth, funding, team expansion (Months 9-24)
+                Risk Radar deployment, workflow automation (Months 9-15)
               </p>
               <ul className="text-xs space-y-1 text-muted-foreground">
-                <li>• Product module expansion</li>
-                <li>• £1.5m seed funding</li>
-                <li>• Sales/marketing build-out</li>
-                <li>• Customer success scaling</li>
+                <li>• Risk Radar (Layer 2)</li>
+                <li>• Guarded workflows (2-3 pilots)</li>
+                <li>• Compliance automation</li>
+                <li>• Multi-tenant SaaS skeleton</li>
               </ul>
             </div>
           </div>
@@ -353,26 +440,26 @@ export default function StrategyOverviewPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <DollarSign className="h-5 w-5" />
-              Financial Targets
+              Financial & ROI Targets
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-sm">Year 1 ARR:</span>
-                <span className="font-bold">£500k</span>
+                <span className="text-sm">Client ROI Range:</span>
+                <span className="font-bold text-green-600">$2-10M</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Year 2 ARR:</span>
-                <span className="font-bold">£2.5m</span>
+                <span className="text-sm">Payback Period:</span>
+                <span className="font-bold">2-4 months</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Year 3 ARR:</span>
-                <span className="font-bold text-green-600">£8m+</span>
+                <span className="text-sm">Revenue Mix (H1'26):</span>
+                <span className="font-bold">70/30 services/platform</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Target NRR:</span>
-                <span className="font-bold">85%+</span>
+                <span className="text-sm">Year 3 ARR Target:</span>
+                <span className="font-bold text-blue-600">£8m+</span>
               </div>
             </div>
           </CardContent>
@@ -388,20 +475,20 @@ export default function StrategyOverviewPage() {
           <CardContent>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-sm">Trained Leaders:</span>
-                <span className="font-bold">250+</span>
+                <span className="text-sm">Primary Buyers:</span>
+                <span className="font-bold">CFO/COO/CRO</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Target Market:</span>
-                <span className="font-bold">CCOs</span>
+                <span className="text-sm">Beachhead:</span>
+                <span className="font-bold">Back-office ops</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Positioning:</span>
-                <span className="font-bold">Painkiller</span>
+                <span className="text-sm">Market Window:</span>
+                <span className="font-bold text-red-600">18 months</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Differentiation:</span>
-                <span className="font-bold text-blue-600">Only integrated solution</span>
+                <span className="font-bold text-blue-600">Literacy-first approach</span>
               </div>
             </div>
           </CardContent>
@@ -417,20 +504,20 @@ export default function StrategyOverviewPage() {
           <CardContent>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-sm">C-Suite Access:</span>
-                <span className="font-bold text-green-600">Trusted</span>
+                <span className="text-sm">MIT Validation:</span>
+                <span className="font-bold text-green-600">95% failure rate</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Expertise:</span>
-                <span className="font-bold">Comms + AI</span>
+                <span className="text-sm">Partnership Success:</span>
+                <span className="font-bold">66% vs 33%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">IP Moat:</span>
-                <span className="font-bold">Data + Method</span>
+                <span className="text-sm">Proprietary IP:</span>
+                <span className="font-bold">Prototype Paradox</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm">Market Gap:</span>
-                <span className="font-bold text-purple-600">Vertical-specific</span>
+                <span className="text-sm">Technical Moat:</span>
+                <span className="font-bold text-purple-600">3-tier architecture</span>
               </div>
             </div>
           </CardContent>
